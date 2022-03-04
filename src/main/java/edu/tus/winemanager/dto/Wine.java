@@ -3,18 +3,22 @@ package edu.tus.winemanager.dto;
 // import jdk.vm.ci.meta.Local;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 import java.time.LocalDate;
+
 
 @Entity
 public class Wine {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
 
-
+	@NotBlank(message = "Name is required")
 	private String name;
+	@Positive(message = "Year must be positive")
 	private int year;
 	private String grapes;
 	private String country;

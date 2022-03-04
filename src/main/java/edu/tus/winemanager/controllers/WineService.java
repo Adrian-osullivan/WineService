@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import edu.tus.winemanager.dao.WineRepository;
 import edu.tus.winemanager.dto.Wine;
 
+import javax.validation.Valid;
+
 
 @RestController
 @Service
@@ -40,11 +42,11 @@ public class WineService {
 		return wineRepo.findByCountry(country);}
 
 	@PostMapping("/wines")
-	public ResponseEntity createWine(@RequestBody Wine wine) throws BadRequestException {
+	public ResponseEntity createWine(@Valid @RequestBody Wine wine)  {
 
 		// Validate Null Entries
 		// name, year, grapes, country, region, rating, expiry_date
-		ValidateNullEntries(wine);
+		//ValidateNullEntries(wine);
 
 		wineRepo.save(wine);
 		return ResponseEntity.status(HttpStatus.OK).body(wine);
@@ -53,7 +55,7 @@ public class WineService {
 	private void ValidateNullEntries(Wine wine) throws BadRequestException {
 		if (wine.getCountry() == null ||  wine.getExpiryDate() == null || wine.getGrapes() == null || wine.getName() == null
 		|| wine.getRating() == null || wine.getRegion() == null) {
-			throw new BadRequestException("name, year, grapes, country, region, rating & expiry date must be populated");
+			//throw new BadRequestException("name, year, grapes, country, region, rating & expiry date must be populated");
 		}
 	}
 
