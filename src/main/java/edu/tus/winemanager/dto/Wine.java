@@ -2,6 +2,9 @@ package edu.tus.winemanager.dto;
 
 // import jdk.vm.ci.meta.Local;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
@@ -10,6 +13,7 @@ import java.time.LocalDate;
 
 
 @Entity
+@ApiModel(description = "Wine quality record")
 public class Wine {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +21,7 @@ public class Wine {
 	private Long id;
 
 	@NotBlank(message = "Name is required")
+	@ApiModelProperty(notes="Name is a required entry")
 	private String name;
 	@Positive(message = "Year must be positive")
 	private int year;

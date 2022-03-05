@@ -1,11 +1,15 @@
 package edu.tus.winemanager.controllers;
 
+
 import java.util.List;
 import java.util.Optional;
 
+import edu.tus.winemanager.dto.Rating;
 import edu.tus.winemanager.exceptions.BadRequestException;
 import edu.tus.winemanager.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -97,6 +101,17 @@ public class WineService {
 		}
 		else
 			throw new ResourceNotFoundException("Wine Not Found :: " + wineId);
+	}
+
+	@GetMapping("/PagedWines")
+	public Page<Wine> getWinesByPage(Pageable pageable) {
+
+		Page<Wine> winePage =  wineRepo.findAll( pageable);
+	return winePage;
+	}
+	@GetMapping("/wines/CountryAndRating")
+	public List<Wine> getCountryAndRatingWines(@RequestParam String country, @RequestParam Rating rating ) {
+		return wineRepo.findByCountryAndRating(country, rating);
 	}
 
 
